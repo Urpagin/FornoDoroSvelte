@@ -6,6 +6,9 @@
   onMount(() => {
     const updateNavbarOpacity = () => {
       const scrollY = window.scrollY;
+      if (navbarOpacity <= 0.5) { // keeps the navbar bg at least at 50% opacity
+        return;
+      }
       navbarOpacity = 1 - Math.min(scrollY / 400, 1);
     };
 
@@ -61,10 +64,10 @@ style:background-color={`rgba(31, 41, 55, ${navbarOpacity})`}>
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex space-x-4">
               <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-              <a href="/menu" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Menu</a>
-              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Team</a>
-              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Projects</a>
-              <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Calendar</a>
+              <!-- <a href="/menu" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Menu</a> -->
+              <a href="/menu" class="outline outline-offset-2 outline-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Menu</a>
+              <a href="/reservation" class="outline outline-offset-2 outline-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Réservation</a>
+              <a href="evenements" class="outline outline-offset-2 outline-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Évenements</a>
             </div>
           </div>
         </div>
@@ -73,16 +76,4 @@ style:background-color={`rgba(31, 41, 55, ${navbarOpacity})`}>
         </div>
       </div>
     </div>
-  
-    <!-- Mobile menu, show/hide based on menu state. -->
-    <div class="sm:hidden" id="mobile-menu">
-      <div class="space-y-1 px-2 pb-3 pt-2">
-        <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-        <a href="/menu" class="bg-gray-900 text-white block rounded-md px-3 py-2 text-base font-medium" aria-current="page">Menu</a>
-        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Team</a>
-        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Projects</a>
-        <a href="#" class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Calendar</a>
-      </div>
-    </div>
-  </nav>
-  
+</nav>
