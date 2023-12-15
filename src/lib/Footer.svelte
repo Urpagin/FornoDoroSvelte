@@ -73,37 +73,34 @@ async function handleSendMessage() {
 
 <footer class="footer p-10 bg-base-200 text-base-content">
     <nav>
-      <header class="footer-title">Services</header> 
+      <header class="footer-title">Servizi</header> 
       <a class="link link-hover">Branding</a>
       <a class="link link-hover">Design</a>
       <a class="link link-hover">Marketing</a>
-      <a class="link link-hover">Advertisement</a>
+      <a class="link link-hover">Pubblicità</a>
     </nav> 
     <nav>
-      <header class="footer-title">Company</header> 
-      <a class="link link-hover">About us</a>
-      <a class="link link-hover">Contact</a>
-      <a class="link link-hover">Jobs</a>
+      <header class="footer-title">Azienda</header> 
+      <a href="/author" class="link link-hover">Chi siamo</a>
+      <a class="link link-hover">Contatti</a>
+      <a class="link link-hover">Lavora con noi</a>
       <a class="link link-hover">Press kit</a>
     </nav> 
     <nav>
-      <header class="footer-title">Legal</header> 
-      <a class="link link-hover">Terms of use</a>
-      <a class="link link-hover">Privacy policy</a>
-      <a class="link link-hover">Cookie policy</a>
+      <header class="footer-title">Legale</header> 
+      <a class="link link-hover">Termini di utilizzo</a>
+      <a class="link link-hover">Politica sulla privacy</a>
+      <a class="link link-hover">Politica sui cookie</a>
     </nav> 
     <form>
       <header class="footer-title">Newsletter</header> 
       <fieldset class="form-control w-80">
         <label class="label">
-          <span class="label-text">Enter your email address</span>
+          <span class="label-text">Inserisci il tuo indirizzo email</span>
         </label> 
         <div class="join">
-
-            <input type="text" bind:value={inputValueNewsletter} placeholder="username@site.com" class="input input-bordered join-item {inputValueNewsletter ? 'opacity-100' : 'opacity-50'}" />
-
-            <button class="btn btn-primary join-item" on:click={handleButtonClick} on:click={handleSendMessage}>Subscribe</button>
-            
+            <input type="text" bind:value={inputValueNewsletter} placeholder="nomeutente@sito.com" class="input input-bordered join-item {inputValueNewsletter ? 'opacity-100' : 'opacity-50'}" />
+            <button class="btn btn-primary join-item" on:click={handleButtonClick} on:click={handleSendMessage}>Iscriviti</button>
             {#if showSuccessAlert}
                 <div class="alert-container">
                     <div role="alert" class="alert alert-success" in:fade={{ duration: 500 }}>
@@ -112,12 +109,11 @@ async function handleSendMessage() {
                     </div>
                 </div>
             {/if}
-            
             {#if showWarningAlert}
                 <div class="alert-container">
                     <div role="alert" class="alert alert-warning" in:fade={{ duration: 500 }}>
                         <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
-                        <span>Warning: Invalid email address!</span>
+                        <span>Attenzione: Indirizzo email non valido!</span>
                     </div>
                 </div>
             {/if}

@@ -68,7 +68,7 @@
             <svg viewBox="0 0 2 2" width="3" height="3" aria-hidden="true" class="fill-gray-900">
               <circle cx="1" cy="1" r="1" />
             </svg>
-            <div class="text-gray-600">Music Teacher</div>
+            <div class="text-gray-600">Chef Stellato</div>
           </div>
         </figcaption>
       </figure>
