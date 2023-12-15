@@ -1,79 +1,83 @@
 <script>
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
 
-  let navbarOpacity = 1;
+  let navbarOpacity = 1; // Initial opacity is 100%
+
+  function updateOpacity() {
+    const scrollY = window.scrollY;
+    const maxScroll = 200; // Maximum scroll value to reach 40% opacity
+    navbarOpacity = Math.max(0.7, 1 - scrollY / maxScroll);
+  }
+
+  let showReductions = false;
+  let reductionsBox;
+
+  function toggleReductions() {
+    showReductions = !showReductions;
+  }
+
+  function handleClickOutside(event) {
+    if (reductionsBox && !reductionsBox.contains(event.target)) {
+      showReductions = false;
+    }
+  }
 
   onMount(() => {
-    const updateNavbarOpacity = () => {
-      const scrollY = window.scrollY;
-      if (navbarOpacity <= 0.5) { // keeps the navbar bg at least at 50% opacity
-        return;
-      }
-      navbarOpacity = 1 - Math.min(scrollY / 400, 1);
-    };
-
-    window.addEventListener('scroll', updateNavbarOpacity);
-
-    return () => {
-      window.removeEventListener('scroll', updateNavbarOpacity);
-    };
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scroll', updateOpacity);
+      window.addEventListener('click', handleClickOutside);
+    }
   });
+
+  onDestroy(() => {
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('scroll', updateOpacity);
+      window.removeEventListener('click', handleClickOutside);
+    }
+  });
+
+
+  let sus = 0;
+
+function secretFunc() {
+  sus += 1;
+  if (sus >= 666) {
+    window.location.replace('/sus');
+    sus = 0;
+  }
+}
 </script>
 
-<style>
-  .sticky-navbar {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    transition: background-color 0.3s;
-  }
-</style>
-
-
-<nav class="sticky-navbar bg-gray-800"
-style:background-color={`rgba(31, 41, 55, ${navbarOpacity})`}>
-    <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-      <div class="relative flex h-16 items-center justify-between">
-        <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-          <!-- Mobile menu button-->
-          <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
-            <span class="absolute -inset-0.5"></span>
-            <span class="sr-only">Open main menu</span>
-            <!--
-              Icon when menu is closed.
-  
-              Menu open: "hidden", Menu closed: "block"
-            -->
-            <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-            </svg>
-            <!--
-              Icon when menu is open.
-  
-              Menu open: "block", Menu closed: "hidden"
-            -->
-            <svg class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-        </div>
-        <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
-          <div class="flex flex-shrink-0 items-center">
-            <a href="/"><img class="h-8 w-auto" src="/forno_doro_logo.png" alt="Your Company"></a>
-          </div>
-          <div class="hidden sm:ml-6 sm:block">
-            <div class="flex space-x-4">
-              <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
-              <!-- <a href="/menu" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium" aria-current="page">Menu</a> -->
-              <a href="/menu" class="outline outline-offset-2 outline-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Menu</a>
-              <a href="/reservation" class="outline outline-offset-2 outline-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Réservation</a>
-              <a href="evenements" class="outline outline-offset-2 outline-3 text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Évenements</a>
-            </div>
-          </div>
-        </div>
-        <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-
-        </div>
+<div class="navbar bg-base-100 fixed top-0 left-0 w-full z-10" style="opacity: {navbarOpacity}">
+  <div class="navbar-start">
+    <div class="dropdown">
+      <div tabindex="0" role="button" class="btn btn-ghost btn-circle">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" /></svg>
       </div>
+      <ul tabindex="-1" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+        <li><a href="/menu">Menù</a></li>
+        <li><a href="/reservation">Prenotazione</a></li>
+        <li><a href="/events">Eventi</a></li>
+      </ul>
     </div>
-</nav>
+  </div>
+  <div class="navbar-center" on:click={secretFunc}>
+    <a href="/" class="btn btn-ghost text-2xl">Forno D'oro</a>
+  </div>
+  <div class="navbar-end">
+    <button class="btn btn-ghost btn-circle">
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+    </button>
+    <button class="btn btn-ghost btn-circle" on:click|stopPropagation={toggleReductions}>
+      <div class="indicator">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" /></svg>
+        <span class="badge badge-xs badge-primary indicator-item"></span>
+      </div>
+    </button>
+  </div>
+  {#if showReductions}
+    <div bind:this={reductionsBox} class="absolute top-full right-0 mt-2 p-4 bg-gray-100 text-gray-800 border border-gray-300 rounded shadow-lg z-20">
+        <p>Tutte le pizze tradizionali al -30%!</p>
+    </div>
+  {/if}
+</div>

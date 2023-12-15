@@ -5,5 +5,7 @@
 <Navbar />
 <slot></slot>
 
+<h1>EVENTS</h1>
 
-<h1>evenements</h1>
+<img src="ai-coming-soon-compressed.jpg" alt="">
+

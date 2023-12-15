@@ -7,3 +7,5 @@
 
 
 <h1>reservation</h1>
+
+<img src="ai-coming-soon-compressed.jpg" alt="">
